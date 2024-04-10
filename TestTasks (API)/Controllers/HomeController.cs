@@ -190,11 +190,9 @@ namespace TestTasks__API_.Controllers
             try
             {
                 var result = _repository.FindByIdException(pizzaId);
-                //return Ok("CheckExceptions", result);
+                //return View("CheckExceptions", result);
 
-                var response = new { Message = "CheckExceptions", Result = result }; // Создаем объект с двумя свойствами
-
-                return Ok(response); // Возвращаем объект в методе Ok
+                return Ok(result); // Возвращаем объект в методе Ok
             }
             catch (Exception ex)
             {
