@@ -1,0 +1,10 @@
+diff a/TestTasks (API)/Controllers/HomeController.cs b/TestTasks (API)/Controllers/HomeController.cs	(rejected hunks)
+@@ -198,7 +198,7 @@
+             }
+             catch (Exception ex)
+             {
+-                _logger.LogError(ex, $"A change occurred while trying to get information about the pizza with ID {pizzaId} in the CheckExceptions method."); // ���������� ����������
++                _logger.LogError(ex, $"A change occurred while trying to get information about the pizza with ID {pizzaId} in the CheckExceptions method"); // ���������� ����������
+ 
+                 return StatusCode(StatusCodes.Status404NotFound , "Error code: " + StatusCodes.Status404NotFound + ". " + ex.Message);
+             }
