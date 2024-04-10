@@ -198,7 +198,7 @@ namespace TestTasks__API_.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"A change occurred while trying to get information about the pizza with ID {pizzaId} in the CheckExceptions method."); // Записываем исключение
+                _logger.LogError(ex, $"A change occurred while trying to get information about the pizza with ID {pizzaId} in the CheckExceptions method"); // Записываем исключение
 
                 return StatusCode(StatusCodes.Status404NotFound , "Error code: " + StatusCodes.Status404NotFound + ". " + ex.Message);
             }
