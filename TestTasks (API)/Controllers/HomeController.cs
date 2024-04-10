@@ -11,7 +11,7 @@ namespace TestTasks__API_.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IPizzaRepository _repository;
 
-        // Объединяем два конструктора в один
+        // инициализация полей в конструкторе
         public HomeController(ILogger<HomeController> logger, IPizzaRepository repository)
         {
             _logger = logger;
@@ -154,9 +154,9 @@ namespace TestTasks__API_.Controllers
         [HttpGet("Detail", Name = "Detail")]
         public IActionResult Detail(int id)
         {
-            MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            PizzaRepository repository = new PizzaRepository(context);
-            var products = repository.FindById(id);
+            //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
+            //PizzaRepository repository = new PizzaRepository(context);
+            var products = _repository.FindById(id);
 
             return Ok(products);
         }
@@ -164,9 +164,9 @@ namespace TestTasks__API_.Controllers
         [HttpGet("IndexNew", Name = "IndexNew")]
         public IActionResult IndexNew()
         {
-            MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            PizzaRepository repository = new PizzaRepository(context);
-            List<PizzaModel> products = repository.GetAll();
+            //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
+            //PizzaRepository repository = new PizzaRepository(context);
+            List<PizzaModel> products = _repository.GetAll();
             return Ok(products);
         }
 

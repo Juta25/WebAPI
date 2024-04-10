@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TestTasks (API).WEB.props" />
+</Project>
