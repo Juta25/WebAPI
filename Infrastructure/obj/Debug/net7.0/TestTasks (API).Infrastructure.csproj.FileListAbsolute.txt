@@ -1,0 +1,17 @@
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).Infrastructure.deps.json
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).Infrastructure.runtimeconfig.json
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).Infrastructure.dll
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).Infrastructure.pdb
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.AssemblyInfo.cs
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.csproj.CopyComplete
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.dll
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\refint\TestTasks (API).Infrastructure.dll
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.pdb
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\TestTasks (API).Infrastructure.genruntimeconfig.cache
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\obj\Debug\net7.0\ref\TestTasks (API).Infrastructure.dll
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).DAL.dll
+C:\Users\User\Desktop\TestTasks (API)\Infrastructure\bin\Debug\net7.0\TestTasks (API).DAL.pdb
