@@ -83,7 +83,6 @@ C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks (API).WEB.AssemblyInfoInputs.cache
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks (API).WEB.AssemblyInfo.cs
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks (API).WEB.csproj.CoreCompileInputs.cache
-C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks (API).WEB.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\TestTasks (API).WEB.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\staticwebassets\msbuild.TestTasks (API).WEB.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\User\Desktop\TestTasks (API)\TestTasks (API)\obj\Debug\net7.0\staticwebassets\msbuild.build.TestTasks (API).WEB.props

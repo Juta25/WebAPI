@@ -155,9 +155,8 @@ namespace TestTasks__API_.Controllers
         public IActionResult Detail(int id)
         {
             //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            //PizzaRepository repository = new PizzaRepository(context);
+            //PizzaRepository repository = new PizzaRepository(context); создание объекта PizzaRepository с использованием ранее инициализированного context
             var products = _repository.FindById(id);
-
             return Ok(products);
         }
 
@@ -165,7 +164,7 @@ namespace TestTasks__API_.Controllers
         public IActionResult IndexNew()
         {
             //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            //PizzaRepository repository = new PizzaRepository(context);
+            //PizzaRepository repository = new PizzaRepository(context); создание объекта PizzaRepository с использованием ранее инициализированного context
             List<PizzaModel> products = _repository.GetAll();
             return Ok(products);
         }
@@ -174,8 +173,7 @@ namespace TestTasks__API_.Controllers
         public IActionResult GetPizzaById(int id)
         {
             var pizza = _repository.FindById(id);
-            //return Json(pizza);
-            return Ok(pizza); //вместо Json
+            return Ok(pizza);
         }
 
         [HttpGet("CheckExceptionsGet", Name = "CheckExceptionsGet")]
@@ -192,7 +190,7 @@ namespace TestTasks__API_.Controllers
                 var result = _repository.FindByIdException(pizzaId);
                 //return View("CheckExceptions", result);
 
-                return Ok(result); // Возвращаем объект в методе Ok
+                return Ok(result);
             }
             catch (Exception ex)
             {

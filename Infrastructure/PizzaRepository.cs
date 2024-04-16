@@ -14,36 +14,30 @@ namespace TestTasks__API_
         public List<PizzaModel> GetAll()
         {
             List<PizzaModel> products = new List<PizzaModel>();
-            using (MankovaJV_TaskContext bd = new MankovaJV_TaskContext()) // работа с базой
+            products = _bd.Pizzas.Select(list => new PizzaModel()
             {
-                products = bd.Pizzas.Select(list => new PizzaModel()
-                {
-                    Id = list.Id,
-                    Image = list.Image,
-                    Name = list.Name,
-                    Description = list.Description,
-                    Weight = list.Weight,
-                    Price = list.Price,
-                }).ToList();
-            }
+                Id = list.Id,
+                Image = list.Image,
+                Name = list.Name,
+                Description = list.Description,
+                Weight = list.Weight,
+                Price = list.Price,
+            }).ToList();
             return products;
         }
 
         public PizzaModel FindById(int id)
         {
             List<PizzaModel> product = new List<PizzaModel>();
-            using (MankovaJV_TaskContext bd = new MankovaJV_TaskContext()) // работа с базой
+            product = _bd.Pizzas.Select(list => new PizzaModel()
             {
-                product = bd.Pizzas.Select(list => new PizzaModel()
-                {
-                    Id = list.Id,
-                    Image = list.Image,
-                    Name = list.Name,
-                    Description = list.Description,
-                    Weight = list.Weight,
-                    Price = list.Price,
-                }).ToList();
-            }
+                Id = list.Id,
+                Image = list.Image,
+                Name = list.Name,
+                Description = list.Description,
+                Weight = list.Weight,
+                Price = list.Price,
+            }).ToList();
 
             var defaultProduct = product.FirstOrDefault(f => f.Id == id);
             return defaultProduct;
@@ -52,18 +46,15 @@ namespace TestTasks__API_
         public PizzaModel FindByIdException(int id)
         {
             List<PizzaModel> product = new List<PizzaModel>();
-            using (MankovaJV_TaskContext bd = new MankovaJV_TaskContext()) // работа с базой
+            product = _bd.Pizzas.Select(list => new PizzaModel()
             {
-                product = bd.Pizzas.Select(list => new PizzaModel()
-                {
-                    Id = list.Id,
-                    Image = list.Image,
-                    Name = list.Name,
-                    Description = list.Description,
-                    Weight = list.Weight,
-                    Price = list.Price,
-                }).ToList();
-            }
+                Id = list.Id,
+                Image = list.Image,
+                Name = list.Name,
+                Description = list.Description,
+                Weight = list.Weight,
+                Price = list.Price,
+            }).ToList();
 
             var defaultProduct = product.FirstOrDefault(f => f.Id == id);
 
@@ -76,48 +67,39 @@ namespace TestTasks__API_
 
         public void Create(PizzaModel pizza)
         {
-            using (MankovaJV_TaskContext bd = new MankovaJV_TaskContext())
+            var newPizza = new Pizza
             {
-                var newPizza = new Pizza
-                {
-                    Name = pizza.Name,
-                    Image = pizza.Image,
-                    Description = pizza.Description,
-                    Weight = pizza.Weight,
-                    Price = pizza.Price
-                };
-                bd.Pizzas.Add(newPizza);
-                bd.SaveChanges();
-            }
+                Name = pizza.Name,
+                Image = pizza.Image,
+                Description = pizza.Description,
+                Weight = pizza.Weight,
+                Price = pizza.Price
+            };
+            _bd.Pizzas.Add(newPizza);
+            _bd.SaveChanges();
         }
 
         public void Update(PizzaModel pizza)
         {
-            using (MankovaJV_TaskContext bd = new MankovaJV_TaskContext())
+            var existingPizza = _bd.Pizzas.Find(pizza.Id);
+            if (existingPizza != null)
             {
-                var existingPizza = bd.Pizzas.Find(pizza.Id);
-                if (existingPizza != null)
-                {
-                    existingPizza.Name = pizza.Name;
-                    existingPizza.Image = pizza.Image;
-                    existingPizza.Description = pizza.Description;
-                    existingPizza.Weight = pizza.Weight;
-                    existingPizza.Price = pizza.Price;
-                    bd.SaveChanges();
-                }
+                existingPizza.Name = pizza.Name;
+                existingPizza.Image = pizza.Image;
+                existingPizza.Description = pizza.Description;
+                existingPizza.Weight = pizza.Weight;
+                existingPizza.Price = pizza.Price;
+                _bd.SaveChanges();
             }
         }
 
         public void Delete(int pizzaId)
         {
-            using (MankovaJV_TaskContext db = new MankovaJV_TaskContext())
+            var pizzaToDelete = _bd.Pizzas.Find(pizzaId);
+            if (pizzaToDelete != null)
             {
-                var pizzaToDelete = db.Pizzas.Find(pizzaId);
-                if (pizzaToDelete != null)
-                {
-                    db.Pizzas.Remove(pizzaToDelete);
-                    db.SaveChanges();
-                }
+                _bd.Pizzas.Remove(pizzaToDelete);
+                _bd.SaveChanges();
             }
         }
     }
