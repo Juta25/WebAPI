@@ -26,6 +26,22 @@ namespace TestTasks__API_
             return products;
         }
 
+        public List<PizzaModel> PizzaSearch(string searchString)
+        {
+            List<PizzaModel> products = _bd.Pizzas
+                .Where(p => p.Name.ToLower().Contains(searchString.ToLower()) || p.Description.ToLower().Contains(searchString.ToLower()))
+                .Select(p => new PizzaModel
+                {
+                    Id = p.Id,
+                    Image = p.Image,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Weight = p.Weight,
+                    Price = p.Price,
+                }).ToList();
+            return products;
+        }
+
         public PizzaModel FindById(int id)
         {
             var defaultProduct = _bd.Pizzas
