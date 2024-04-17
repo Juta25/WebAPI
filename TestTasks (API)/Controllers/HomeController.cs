@@ -19,152 +19,9 @@ namespace TestTasks__API_.Controllers
         }
 
 
-        [HttpGet("Index", Name = "Index")]  //маршрут для HttpGet и наименование маршрута для использования в других частях кода
-        public IActionResult Index()
-        {
-            List<PizzaModel> products = _repository.GetAll();
-            return Ok(products);
-        }
-
-        [HttpGet("Privacy", Name = "Privacy")]
-        public IActionResult Privacy()
-        {
-            return Ok();
-        }
-
-        [HttpGet("GetPizzas", Name = "GetPizzas")]
+        [HttpGet("GetPizzas", Name = "GetPizzas")]  //маршрут для HttpGet и наименование маршрута для использования в других частях кода
         public IActionResult GetPizzas()
         {
-            var pizzas = new List<PizzaModel>
-            {
-                new PizzaModel
-                {
-                    Id = 1,
-                    Name = "Новогодняя",
-                    Image = "P1.jpg",
-                    Description = "Соус 'Гавайский', Сыр моцарелла, Куриная грудка, Мандарины консервированные, Стружка миндаля, Кокосовая стружка",
-                    Weight = 670,
-                    Price = 470
-                },
-                new PizzaModel
-                {
-                    Id = 2,
-                    Name = "Capriccio",
-                    Image = "P2.jpg",
-                    Description = "Сыр моцарелла, Соус 'Барбекю', Соус 'Кальяри', Пепперони, Овощи гриль, Бекон, Ветчина, Томаты черри, Шампиньоны",
-                    Weight = 980,
-                    Price = 600
-                },
-                new PizzaModel
-                {
-                    Id = 3,
-                    Name = "XXXL",
-                    Image = "P3.jpg",
-                    Description = "Сыр моцарелла, Соус '1000 островов', Куриный рулет, Ветчина, Колбаски охотничьи, Бекон, Сервелат, Огурцы маринованные, Томаты черри, Маслины, Лук маринованный",
-                    Weight = 740,
-                    Price = 510
-                },
-                new PizzaModel
-                {
-                    Id = 4,
-                    Name = "4 вкуса",
-                    Image = "P4.jpg",
-                    Description = "Соус '1000 островов', Сыр моцарелла, Рулет куриный, Ветчина, Пепперони, Сыр пармезан, Шампиньоны, Томаты свежие, Маслины/оливки",
-                    Weight = 540,
-                    Price = 450
-                },
-                new PizzaModel
-                {
-                    Id = 5,
-                    Name = "Амазонка",
-                    Image = "P5.jpg",
-                    Description = "Соус 'Томатный', Сыр моцарелла, Куриная грудка, Брокколи, Огурцы маринованные, Перец болгарский, Шампиньоны, Томаты черри, Маслины, Лук маринованный",
-                    Weight = 600,
-                    Price = 450
-                },
-                new PizzaModel
-                {
-                    Id = 6,
-                    Name = "БананZZа",
-                    Image = "P6.jpg",
-                    Description = "Бананы, Соус 'Гавайский', Сыр моцарелла, Ананас, Шоколад молочный, Кокос/миндаль, Топпинг клубничный",
-                    Weight = 520,
-                    Price = 420
-                },
-                new PizzaModel
-                {
-                    Id = 7,
-                    Name = "Барбекю",
-                    Image = "P7.jpg",
-                    Description = "Соус 'Томатный', Сыр моцарелла, Ветчина, Бекон, Пепперони, Соус 'Барбекю', Томаты, Перец болгарский, Лук маринованный",
-                    Weight = 590,
-                    Price = 450
-                },
-                new PizzaModel
-                {
-                    Id = 8,
-                    Name = "Буритто",
-                    Image = "P8.jpg",
-                    Description = "Соус 'Томатный острый', Сыр моцарелла, Куриная грудка, Кукуруза, Фасоль консервированная, Соус сырный 'Пармеджано', Перец болгарскийX, Лук маринованный",
-                    Weight = 670,
-                    Price = 450
-                },
-                new PizzaModel
-                {
-                    Id = 9,
-                    Name = "Гавайская",
-                    Image = "P9.jpg",
-                    Description = "Ветчина, Соус 'Гавайский', Сыр моцарелла, Ананас, Перец болгарский",
-                    Weight = 550,
-                    Price = 450
-                },
-                new PizzaModel
-                {
-                    Id = 10,
-                    Name = "Гавайская Premium",
-                    Image = "P10.jpg",
-                    Description = "Соус 'Гавайский', Сыр моцарелла, Ананас, Ветчина, Куриный рулет, Кукуруза, Перец болгарский",
-                    Weight = 590,
-                    Price = 470
-                },
-                new PizzaModel
-                {
-                    Id = 11,
-                    Name = "Греческая",
-                    Image = "P11.jpg",
-                    Description = "Соус 'Кальяри', Сыр моцарелла, Сливочный сыр, Брокколи, Томаты черри, Перец болгарский, Маслины",
-                    Weight = 570,
-                    Price = 480
-                },
-                new PizzaModel
-                {
-                    Id = 12,
-                    Name = "Грибная",
-                    Image = "P12.jpg",
-                    Description = "Соус 'Грибной', Сыр моцарелла, Опята маринованные, Укроп, Шампиньоны, Лук маринованный",
-                    Weight = 550,
-                    Price = 450
-                }
-                };
-
-            //return Json(pizzas);
-            return Ok(pizzas); //вместо Json
-        }
-
-        [HttpGet("Detail", Name = "Detail")]
-        public IActionResult Detail(int id)
-        {
-            //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            //PizzaRepository repository = new PizzaRepository(context); создание объекта PizzaRepository с использованием ранее инициализированного context
-            var products = _repository.FindById(id);
-            return Ok(products);
-        }
-
-        [HttpGet("IndexNew", Name = "IndexNew")]
-        public IActionResult IndexNew()
-        {
-            //MankovaJV_TaskContext context = new MankovaJV_TaskContext();
-            //PizzaRepository repository = new PizzaRepository(context); создание объекта PizzaRepository с использованием ранее инициализированного context
             List<PizzaModel> products = _repository.GetAll();
             return Ok(products);
         }
@@ -196,7 +53,7 @@ namespace TestTasks__API_.Controllers
             {
                 _logger.LogError(ex, $"A change occurred while trying to get information about the pizza with ID {pizzaId} in the CheckExceptions method"); // Записываем исключение
 
-                return StatusCode(StatusCodes.Status404NotFound , "Error code: " + StatusCodes.Status404NotFound + ". " + ex.Message);
+                return StatusCode(StatusCodes.Status404NotFound, "Error code: " + StatusCodes.Status404NotFound + ". " + ex.Message);
             }
         }
 

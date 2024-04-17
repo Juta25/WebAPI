@@ -28,40 +28,39 @@ namespace TestTasks__API_
 
         public PizzaModel FindById(int id)
         {
-            List<PizzaModel> product = new List<PizzaModel>();
-            product = _bd.Pizzas.Select(list => new PizzaModel()
-            {
-                Id = list.Id,
-                Image = list.Image,
-                Name = list.Name,
-                Description = list.Description,
-                Weight = list.Weight,
-                Price = list.Price,
-            }).ToList();
-
-            var defaultProduct = product.FirstOrDefault(f => f.Id == id);
+            var defaultProduct = _bd.Pizzas
+                .Where(p => p.Id == id)
+                .Select(p => new PizzaModel
+                {
+                    Id = p.Id,
+                    Image = p.Image,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Weight = p.Weight,
+                    Price = p.Price
+                }).FirstOrDefault();
             return defaultProduct;
         }
 
         public PizzaModel FindByIdException(int id)
         {
-            List<PizzaModel> product = new List<PizzaModel>();
-            product = _bd.Pizzas.Select(list => new PizzaModel()
-            {
-                Id = list.Id,
-                Image = list.Image,
-                Name = list.Name,
-                Description = list.Description,
-                Weight = list.Weight,
-                Price = list.Price,
-            }).ToList();
-
-            var defaultProduct = product.FirstOrDefault(f => f.Id == id);
+            var defaultProduct = _bd.Pizzas
+                .Where(p => p.Id == id)
+                .Select(p => new PizzaModel
+                {
+                    Id = p.Id,
+                    Image = p.Image,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Weight = p.Weight,
+                    Price = p.Price
+                }).FirstOrDefault();
 
             if (defaultProduct == null)
             {
                 throw new InvalidOperationException($"Произошло исключение при попытке получить информацию о пицце с ID {id} в методе FindByIdException");
             }
+
             return defaultProduct;
         }
 
