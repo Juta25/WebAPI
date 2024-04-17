@@ -5,11 +5,11 @@ using TestTasks__API_.Domain.Interfaces;
 
 namespace TestTasks__API_
 {
-    public class ScopedCounterService : IScopedCounter
+    public class TransientCounterService : ITransientCounter
     {
         protected internal IScopedCounter Counter { get; }
 
-        public ScopedCounterService(IScopedCounter counter)
+        public TransientCounterService(IScopedCounter counter)
         {
             Counter = counter;
         }

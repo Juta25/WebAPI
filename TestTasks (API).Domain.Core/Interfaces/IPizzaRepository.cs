@@ -4,12 +4,12 @@ namespace TestTasks__API_.Domain.Interfaces
 {
     public interface IPizzaRepository
     {
-        public List<PizzaModel> GetAll();
-        public List<PizzaModel> PizzaSearch(string searchString);
-        public PizzaModel FindById(int id);
-        public PizzaModel FindByIdException(int id);
-        public void Create(PizzaModel pizza);
-        public void Update(PizzaModel pizza);
-        public void Delete(int pizzaId);
+        Task<List<PizzaModel>> GetAllAsync();
+        Task<List<PizzaModel>> PizzaSearchAsync(string searchString);
+        Task<PizzaModel> FindByIdAsync(int id);
+        Task<PizzaModel> FindByIdExceptionAsync(int id);
+        Task CreateAsync(PizzaModel pizza);
+        Task UpdateAsync(PizzaModel pizza);
+        Task DeleteAsync(int pizzaId);
     }
 }

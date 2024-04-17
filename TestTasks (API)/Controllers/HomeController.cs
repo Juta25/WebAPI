@@ -12,48 +12,56 @@ namespace TestTasks__API_.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IPizzaRepository _repository;
         private readonly ITransientCounter _trcounter;
+        private readonly TransientCounterService _trcounterService;
         private readonly IScopedCounter _sccounter;
         private readonly ScopedCounterService _sccounterService;
         private readonly ISingletonCounter _sincounter;
 
         // инициализация полей в конструкторе
-        public HomeController(ILogger<HomeController> logger, IPizzaRepository repository, ITransientCounter trcounter, IScopedCounter sccounter, ScopedCounterService sccounterService, ISingletonCounter sincounter)
+        public HomeController(ILogger<HomeController> logger, IPizzaRepository repository, ITransientCounter trcounter, TransientCounterService trcounterService, IScopedCounter sccounter, ScopedCounterService sccounterService, ISingletonCounter sincounter)
         {
             _logger = logger;
             _repository = repository;
             _trcounter = trcounter;
+            _trcounterService = trcounterService;
             _sccounter = sccounter;
             _sccounterService = sccounterService;
             _sincounter = sincounter;
         }
 
 
-        [HttpGet("GetPizzas", Name = "GetPizzas")]  //маршрут для HttpGet и наименование маршрута для использования в других частях кода
-        public IActionResult GetPizzas()
+        [HttpGet("GetPizzas", Name = "GetPizzas")]
+        public async Task<IActionResult> GetPizzas()
         {
-            List<PizzaModel> products = _repository.GetAll();
+            List<PizzaModel> products = await _repository.GetAllAsync();
             return Ok(products);
         }
 
         [HttpGet("GetPizzasBySearch", Name = "GetPizzasBySearch")]
-        public IActionResult GetPizzasBySearch(string searchString)
+
+        public async Task<IActionResult> GetPizzasBySearch(string searchString)
         {
-            var products = _repository.PizzaSearch(searchString);
+            var products = await _repository.PizzaSearchAsync(searchString);
             return Ok(products);
         }
 
         [HttpGet("GetTransientCounter", Name = "GetTransientCounter")]
-        public IActionResult GetTransientCounter()
+        public async Task<IActionResult> GetTransientCounter()
         {
-            int randomValue = _trcounter.Value;
-            return Ok(randomValue);
+            int randomValue = await _trcounter.GetValueAsync();
+            int randomValue2 = await _trcounterService.GetValueAsync();
+            return Ok(new
+            {
+                randomValue,
+                randomValue2
+            });
         }
 
         [HttpGet("GetScopedCounter", Name = "GetScopedCounter")]
-        public IActionResult GetScopedCounter()
+        public async Task<IActionResult> GetScopedCounter()
         {
-            int randomValue = _sccounter.Value;
-            int randomValue2 = _sccounterService.Value;
+            int randomValue = await _sccounter.GetValueAsync();
+            int randomValue2 = await _sccounterService.GetValueAsync();
             return Ok(new
             {
                 randomValue,
@@ -62,26 +70,29 @@ namespace TestTasks__API_.Controllers
         }
 
         [HttpGet("GetSingletonCounter", Name = "GetSingletonCounter")]
-        public IActionResult GetSingletonCounter()
+        public async Task<IActionResult> GetSingletonCounter()
         {
-            int randomValue = _sincounter.Value;
+            int randomValue = await _sincounter.GetValueAsync();
             return Ok(randomValue);
         }
 
         [HttpGet("GetCounterValue", Name = "GetCounterValue")]
-        public IActionResult GetCounterValue([FromServices] ITransientCounter transientCounter,
+        public async Task<IActionResult> GetCounterValue([FromServices] ITransientCounter transientCounter,
+                                    [FromServices] TransientCounterService transientCounterService,
                                     [FromServices] IScopedCounter scopedCounter,
                                     [FromServices] ScopedCounterService scopedCounterService,
                                     [FromServices] ISingletonCounter singletonCounter)
         {
-            int transientValue = transientCounter.Value;
-            int scopedValue = scopedCounter.Value;
-            int scopedService = scopedCounterService.Value;
-            int singletonValue = singletonCounter.Value;
+            int transientValue = await transientCounter.GetValueAsync();
+            int transientService = await transientCounterService.GetValueAsync();
+            int scopedValue = await scopedCounter.GetValueAsync();
+            int scopedService = await scopedCounterService.GetValueAsync();
+            int singletonValue = await singletonCounter.GetValueAsync();
 
             var result = new
             {
                 TransientValue = transientValue,
+                TransientService = transientService,
                 ScopedValue = scopedValue,
                 ScopedService = scopedService,
                 SingletonValue = singletonValue
@@ -92,24 +103,24 @@ namespace TestTasks__API_.Controllers
 
 
         [HttpGet("GetPizzaById", Name = "GetPizzaById")]
-        public IActionResult GetPizzaById(int id)
+        public async Task<IActionResult> GetPizzaById(int id)
         {
-            var pizza = _repository.FindById(id);
+            var pizza = await _repository.FindByIdAsync(id);
             return Ok(pizza);
         }
 
         [HttpGet("CheckExceptionsGet", Name = "CheckExceptionsGet")]
-        public IActionResult CheckExceptionsGet()
+        public async Task<IActionResult> CheckExceptionsGet()
         {
             return Ok();
         }
 
         [HttpPost("CheckExceptions", Name = "CheckExceptions")]
-        public IActionResult CheckExceptions(int pizzaId)
+        public async Task<IActionResult> CheckExceptions(int pizzaId)
         {
             try
             {
-                var result = _repository.FindByIdException(pizzaId);
+                var result = await _repository.FindByIdExceptionAsync(pizzaId);
                 //return View("CheckExceptions", result);
 
                 return Ok(result);
@@ -123,29 +134,29 @@ namespace TestTasks__API_.Controllers
         }
 
         [HttpGet("CreateUpdate", Name = "CreateUpdate")]
-        public IActionResult CreateUpdate(int? id)
+        public async Task<IActionResult> CreateUpdate(int? id)
         {
             PizzaModel pizzaModel = new PizzaModel();
             if (id.HasValue)
             {
-                pizzaModel = _repository.FindById(id.Value);
+                pizzaModel = await _repository.FindByIdAsync(id.Value);
             }
             return Ok(pizzaModel);
         }
 
         //[HttpPut("CreateUpdate", Name = "CreateUpdate")]
         [HttpPost("CreateUpdate", Name = "CreateUpdate")]
-        public IActionResult CreateUpdate(PizzaModel pizza)
+        public async Task<IActionResult> CreateUpdate(PizzaModel pizza)
         {
             if (ModelState.IsValid)
             {
                 if (pizza.Id != 0)
                 {
-                    _repository.Update(pizza);
+                    await _repository.UpdateAsync(pizza);
                 }
                 else
                 {
-                    _repository.Create(pizza);
+                    await _repository.CreateAsync(pizza);
                 }
             }
             return Ok(pizza);
@@ -153,10 +164,10 @@ namespace TestTasks__API_.Controllers
 
         //[HttpDelete("DeletePizza", Name = "DeletePizza")]
         [HttpPost("DeletePizza", Name = "DeletePizza")]
-        public IActionResult DeletePizza(int id)
+        public async Task<IActionResult> DeletePizza(int id)
         {
-            _repository.Delete(id);
-            return RedirectToAction("Index", "Home");
+            await _repository.DeleteAsync(id);
+            return Ok();
         }
     }
 }

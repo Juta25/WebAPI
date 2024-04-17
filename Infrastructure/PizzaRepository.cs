@@ -1,5 +1,7 @@
 using TestTasks__API_.Domain.Core.Models;
 using TestTasks__API_.Domain.Interfaces;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestTasks__API_
 {
@@ -11,40 +13,41 @@ namespace TestTasks__API_
             _bd = bd;
         }
 
-        public List<PizzaModel> GetAll()
+        public async Task<List<PizzaModel>> GetAllAsync()
         {
-            List<PizzaModel> products = new List<PizzaModel>();
-            products = _bd.Pizzas.Select(list => new PizzaModel()
-            {
-                Id = list.Id,
-                Image = list.Image,
-                Name = list.Name,
-                Description = list.Description,
-                Weight = list.Weight,
-                Price = list.Price,
-            }).ToList();
-            return products;
-        }
-
-        public List<PizzaModel> PizzaSearch(string searchString)
-        {
-            List<PizzaModel> products = _bd.Pizzas
-                .Where(p => p.Name.ToLower().Contains(searchString.ToLower()) || p.Description.ToLower().Contains(searchString.ToLower()))
-                .Select(p => new PizzaModel
+            List<PizzaModel> products = await _bd.Pizzas
+                .Select(list => new PizzaModel()
                 {
-                    Id = p.Id,
-                    Image = p.Image,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Weight = p.Weight,
-                    Price = p.Price,
-                }).ToList();
+                    Id = list.Id,
+                    Image = list.Image,
+                    Name = list.Name,
+                    Description = list.Description,
+                    Weight = list.Weight,
+                    Price = list.Price,
+                })
+                .ToListAsync();
             return products;
         }
 
-        public PizzaModel FindById(int id)
+        public async Task<List<PizzaModel>> PizzaSearchAsync(string searchString)
         {
-            var defaultProduct = _bd.Pizzas
+            List<PizzaModel> products = await _bd.Pizzas
+               .Where(p => p.Name.ToLower().Contains(searchString.ToLower()) || p.Description.ToLower().Contains(searchString.ToLower()))
+               .Select(p => new PizzaModel
+               {
+                   Id = p.Id,
+                   Image = p.Image,
+                   Name = p.Name,
+                   Description = p.Description,
+                   Weight = p.Weight,
+                   Price = p.Price,
+               }).ToListAsync();
+            return products;
+        }
+
+        public async Task<PizzaModel> FindByIdAsync(int id)
+        {
+            var defaultProduct = await _bd.Pizzas
                 .Where(p => p.Id == id)
                 .Select(p => new PizzaModel
                 {
@@ -54,13 +57,13 @@ namespace TestTasks__API_
                     Description = p.Description,
                     Weight = p.Weight,
                     Price = p.Price
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync();
             return defaultProduct;
         }
 
-        public PizzaModel FindByIdException(int id)
+        public async Task<PizzaModel> FindByIdExceptionAsync(int id)
         {
-            var defaultProduct = _bd.Pizzas
+            var defaultProduct = await _bd.Pizzas
                 .Where(p => p.Id == id)
                 .Select(p => new PizzaModel
                 {
@@ -70,7 +73,7 @@ namespace TestTasks__API_
                     Description = p.Description,
                     Weight = p.Weight,
                     Price = p.Price
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync();
 
             if (defaultProduct == null)
             {
@@ -80,7 +83,7 @@ namespace TestTasks__API_
             return defaultProduct;
         }
 
-        public void Create(PizzaModel pizza)
+        public async Task CreateAsync(PizzaModel pizza)
         {
             var newPizza = new Pizza
             {
@@ -91,12 +94,12 @@ namespace TestTasks__API_
                 Price = pizza.Price
             };
             _bd.Pizzas.Add(newPizza);
-            _bd.SaveChanges();
+            await _bd.SaveChangesAsync();
         }
 
-        public void Update(PizzaModel pizza)
+        public async Task UpdateAsync(PizzaModel pizza)
         {
-            var existingPizza = _bd.Pizzas.Find(pizza.Id);
+            var existingPizza = await _bd.Pizzas.FindAsync(pizza.Id);
             if (existingPizza != null)
             {
                 existingPizza.Name = pizza.Name;
@@ -104,17 +107,17 @@ namespace TestTasks__API_
                 existingPizza.Description = pizza.Description;
                 existingPizza.Weight = pizza.Weight;
                 existingPizza.Price = pizza.Price;
-                _bd.SaveChanges();
+                await _bd.SaveChangesAsync();
             }
         }
 
-        public void Delete(int pizzaId)
+        public async Task DeleteAsync(int pizzaId)
         {
-            var pizzaToDelete = _bd.Pizzas.Find(pizzaId);
+            var pizzaToDelete = await _bd.Pizzas.FindAsync(pizzaId);
             if (pizzaToDelete != null)
             {
                 _bd.Pizzas.Remove(pizzaToDelete);
-                _bd.SaveChanges();
+                await _bd.SaveChangesAsync();
             }
         }
     }
