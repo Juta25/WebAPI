@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Metrics;
 using TestTasks__API_.Domain.Core.Models;
 using TestTasks__API_.Domain.Interfaces;
 
@@ -10,12 +11,20 @@ namespace TestTasks__API_.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPizzaRepository _repository;
+        private readonly ITransientCounter _trcounter;
+        private readonly IScopedCounter _sccounter;
+        private readonly ScopedCounterService _sccounterService;
+        private readonly ISingletonCounter _sincounter;
 
         // инициализация полей в конструкторе
-        public HomeController(ILogger<HomeController> logger, IPizzaRepository repository)
+        public HomeController(ILogger<HomeController> logger, IPizzaRepository repository, ITransientCounter trcounter, IScopedCounter sccounter, ScopedCounterService sccounterService, ISingletonCounter sincounter)
         {
             _logger = logger;
             _repository = repository;
+            _trcounter = trcounter;
+            _sccounter = sccounter;
+            _sccounterService = sccounterService;
+            _sincounter = sincounter;
         }
 
 
@@ -32,6 +41,55 @@ namespace TestTasks__API_.Controllers
             var products = _repository.PizzaSearch(searchString);
             return Ok(products);
         }
+
+        [HttpGet("GetTransientCounter", Name = "GetTransientCounter")]
+        public IActionResult GetTransientCounter()
+        {
+            int randomValue = _trcounter.Value;
+            return Ok(randomValue);
+        }
+
+        [HttpGet("GetScopedCounter", Name = "GetScopedCounter")]
+        public IActionResult GetScopedCounter()
+        {
+            int randomValue = _sccounter.Value;
+            int randomValue2 = _sccounterService.Value;
+            return Ok(new
+            {
+                randomValue,
+                randomValue2
+            });
+        }
+
+        [HttpGet("GetSingletonCounter", Name = "GetSingletonCounter")]
+        public IActionResult GetSingletonCounter()
+        {
+            int randomValue = _sincounter.Value;
+            return Ok(randomValue);
+        }
+
+        [HttpGet("GetCounterValue", Name = "GetCounterValue")]
+        public IActionResult GetCounterValue([FromServices] ITransientCounter transientCounter,
+                                    [FromServices] IScopedCounter scopedCounter,
+                                    [FromServices] ScopedCounterService scopedCounterService,
+                                    [FromServices] ISingletonCounter singletonCounter)
+        {
+            int transientValue = transientCounter.Value;
+            int scopedValue = scopedCounter.Value;
+            int scopedService = scopedCounterService.Value;
+            int singletonValue = singletonCounter.Value;
+
+            var result = new
+            {
+                TransientValue = transientValue,
+                ScopedValue = scopedValue,
+                ScopedService = scopedService,
+                SingletonValue = singletonValue
+            };
+
+            return Ok(result);
+        }
+
 
         [HttpGet("GetPizzaById", Name = "GetPizzaById")]
         public IActionResult GetPizzaById(int id)
