@@ -8,13 +8,15 @@ namespace TestTasks__API_
     {
         static Random Rnd = new Random();
         private int _value;
+
         public TransientCounter()
         {
             _value = Rnd.Next(0, 1000000);
         }
-        public int Value
+
+        public Task<int> GetValueAsync()
         {
-            get { return _value; }
+            return Task.FromResult(_value);
         }
     }
 }

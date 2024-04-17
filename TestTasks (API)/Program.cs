@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPizzaRepository, PizzaRepository>(); //система на место объектов интерфейса IPizzaRepository будет передавать экземпл€ры класса PizzaRepository
 
 builder.Services.AddTransient<ITransientCounter, TransientCounter>();
+builder.Services.AddTransient<TransientCounterService>();
 
 builder.Services.AddScoped<IScopedCounter, ScopedCounter>();
 builder.Services.AddScoped<ScopedCounterService>();

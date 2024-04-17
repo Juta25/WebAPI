@@ -4,6 +4,6 @@ namespace TestTasks__API_.Domain.Interfaces
 {
     public interface IScopedCounter
     {
-        int Value { get; }
+        Task<int> GetValueAsync();
     }
 }
