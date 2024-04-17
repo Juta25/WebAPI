@@ -26,6 +26,13 @@ namespace TestTasks__API_.Controllers
             return Ok(products);
         }
 
+        [HttpGet("GetPizzasBySearch", Name = "GetPizzasBySearch")]
+        public IActionResult GetPizzasBySearch(string searchString)
+        {
+            var products = _repository.PizzaSearch(searchString);
+            return Ok(products);
+        }
+
         [HttpGet("GetPizzaById", Name = "GetPizzaById")]
         public IActionResult GetPizzaById(int id)
         {

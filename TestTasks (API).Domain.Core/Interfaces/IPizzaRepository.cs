@@ -5,6 +5,7 @@ namespace TestTasks__API_.Domain.Interfaces
     public interface IPizzaRepository
     {
         public List<PizzaModel> GetAll();
+        public List<PizzaModel> PizzaSearch(string searchString);
         public PizzaModel FindById(int id);
         public PizzaModel FindByIdException(int id);
         public void Create(PizzaModel pizza);
