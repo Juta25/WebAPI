@@ -18,7 +18,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //ƒобавление сервиса в коллекцию сервисов приложени€
-builder.Services.AddTransient<IPizzaRepository, PizzaRepository>(); //система на место объектов интерфейса IPizzaRepository будет передавать экземпл€ры класса PizzaRepository
+//builder.Services.AddTransient<IPizzaRepository, PizzaRepository>();
+builder.Services.AddSingleton<DapperContext>();
+builder.Services.AddScoped<IPizzaRepository, PizzaDapperRepository>();//система на место объектов интерфейса IPizzaRepository будет передавать экземпл€ры класса PizzaRepository
 
 builder.Services.AddTransient<ITransientCounter, TransientCounter>();
 builder.Services.AddTransient<TransientCounterService>();
